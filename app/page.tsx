@@ -1,9 +1,14 @@
 import { Snippet } from "@nextui-org/snippet";
 import { Code } from "@nextui-org/code";
+import Link from "next/link";
 
 import { title, subtitle } from "@/components/primitives";
+import { getServerAuthSession } from "@/auth";
+import UserInfo from "@/components/user-info";
 
-export default function Home() {
+export default async function Home() {
+  const authSession = await getServerAuthSession();
+
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
       <div className="inline-block max-w-xl text-center justify-center">
@@ -25,6 +30,15 @@ export default function Home() {
           </span>
         </Snippet>
       </div>
+      {authSession?.user && <UserInfo user={authSession?.user} />}
+      {!authSession?.user && (
+        <Link
+          className="font-medium mt-2 text-blue-600 hover:underline"
+          href="/login"
+        >
+          Login
+        </Link>
+      )}
     </section>
   );
 }
