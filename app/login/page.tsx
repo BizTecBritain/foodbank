@@ -2,6 +2,11 @@
 
 import { signIn } from "next-auth/react";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
+import { Snippet } from "@nextui-org/snippet";
+import { useFormStatus } from "react-dom";
 
 type LoginInput = {
   username: string;
@@ -13,6 +18,8 @@ type PageProps = {
 };
 
 export default function LoginPage({ searchParams }: PageProps) {
+  const { pending } = useFormStatus();
+
   const [inputs, setInputs] = useState<LoginInput>({
     username: "",
     password: "",
@@ -35,70 +42,64 @@ export default function LoginPage({ searchParams }: PageProps) {
   };
 
   return (
-    <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div>
-              <label
-                className="block text-sm font-medium leading-6 text-gray-900"
-                htmlFor="username"
-              >
-                Username
-              </label>
-              <div className="mt-2">
-                <input
-                  required
-                  autoComplete="off"
-                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  id="username"
-                  name="username"
-                  type="text"
-                  value={inputs.username || ""}
-                  onChange={handleChange}
-                />
-              </div>
+    <div className="flex flex-col items-center justify-center min-h-full">
+      <Card className="w-full max-w-md p-4">
+        <CardHeader className="pb-0 pt-2 px-4 flex-col items-start gap-2">
+          <h1 className="text-2xl font-medium">Login</h1>
+          <small className="text-small text-left font-light opacity-80">
+            Enter your email below to login to your account.
+          </small>
+        </CardHeader>
+        <CardBody className="space-y-4">
+          <form
+            className="flex w-full py-3 flex-auto flex-col space-y-4"
+            onSubmit={handleSubmit}
+          >
+            <div className="space-y-2">
+              <Input
+                required
+                disabled={pending}
+                id="username"
+                label="Username"
+                name="username"
+                type="text"
+                value={inputs.username || ""}
+                onChange={handleChange}
+              />
             </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                  htmlFor="password"
-                >
-                  Password
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  required
-                  autoComplete="off"
-                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={inputs.password || ""}
-                  onChange={handleChange}
-                />
-              </div>
+            <div className="space-y-2">
+              <Input
+                required
+                disabled={pending}
+                id="password"
+                label="Password"
+                name="password"
+                type="password"
+                value={inputs.password || ""}
+                onChange={handleChange}
+              />
             </div>
-
-            <div>
-              <button
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                type="submit"
-              >
-                Sign in
-              </button>
+            <div className="space-y-2">
+              <Button className="w-full" disabled={pending} type="submit">
+                Login
+              </Button>
             </div>
-            {searchParams.error && (
-              <p className="text-red-600 text-center capitalize">
-                Login failed.
-              </p>
-            )}
           </form>
-        </div>
-      </div>
-    </>
+        </CardBody>
+        {searchParams.error && (
+          <CardFooter className="pt-0">
+            <Snippet
+              hideCopyButton
+              hideSymbol
+              className="w-full"
+              color="danger"
+              size="lg"
+            >
+              Login failed
+            </Snippet>
+          </CardFooter>
+        )}
+      </Card>
+    </div>
   );
 }
