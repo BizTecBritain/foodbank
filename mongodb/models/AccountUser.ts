@@ -1,7 +1,7 @@
 import mongoose, { Model, model, Schema } from "mongoose";
 
 export interface AccountUserDocument {
-  _id: string;
+  _id: Schema.Types.ObjectId;
   password: string;
   name: string;
   admin: boolean;
