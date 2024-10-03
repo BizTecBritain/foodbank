@@ -73,3 +73,47 @@ export const SearchIcon = (props: IconSvgProps) => (
     />
   </svg>
 );
+
+export const LeftArrowIcon = (props: IconSvgProps) => (
+  <svg
+    aria-hidden="true"
+    className="text-primary"
+    fill="none"
+    focusable="false"
+    height="20"
+    role="presentation"
+    viewBox="0 0 24 24"
+    width="20"
+    {...props}
+  >
+    <path
+      d="M15.5 19l-7-7 7-7"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+    />
+  </svg>
+);
+
+export const RightArrowIcon = (props: IconSvgProps) => (
+  <svg
+    aria-hidden="true"
+    className="rotate-180 text-primary"
+    fill="none"
+    focusable="false"
+    height="20"
+    role="presentation"
+    viewBox="0 0 24 24"
+    width="20"
+    {...props}
+  >
+    <path
+      d="M15.5 19l-7-7 7-7"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+    />
+  </svg>
+);
