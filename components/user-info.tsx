@@ -2,7 +2,7 @@
 
 import { signOut } from "next-auth/react";
 
-import { AccountUser } from "@/mongodb/AccountUser";
+import { AccountUser } from "@/mongodb/models/AccountUser";
 
 type UserInfoProps = {
   user: AccountUser;

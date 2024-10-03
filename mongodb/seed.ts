@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 
-import AccountUserModel from "./AccountUser";
+import AccountUserModel from "./models/AccountUser";
 
 import { connectDB } from ".";
 

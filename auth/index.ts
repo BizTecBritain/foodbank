@@ -3,7 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 
 import { userService } from "./userService";
 
-import AccountUserModel from "@/mongodb/AccountUser";
+import AccountUserModel from "@/mongodb/models/AccountUser";
 import { connectDB } from "@/mongodb";
 
 export const authOptions: NextAuthOptions = {

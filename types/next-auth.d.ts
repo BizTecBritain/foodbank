@@ -1,6 +1,6 @@
 import { DefaultSession } from "next-auth";
 
-import { AccountUser } from "@/mongodb/AccountUser";
+import { AccountUser } from "@/mongodb/models/AccountUser";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {

@@ -13,12 +13,14 @@ import {
 import { Link } from "@nextui-org/link";
 import NextLink from "next/link";
 import clsx from "clsx";
+import { signOut, useSession } from "next-auth/react";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 
 export const Navbar = () => {
   const pathname = usePathname();
+  const session = useSession();
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
@@ -29,25 +31,32 @@ export const Navbar = () => {
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
-          {siteConfig.navItems.map((item, index) => (
+          {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <Link
                 className={clsx({
                   ["pointer-events-none"]: pathname === item.href,
                 })}
-                color={
-                  pathname === item.href
-                    ? "primary"
-                    : index === siteConfig.navItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
+                color={pathname === item.href ? "primary" : "foreground"}
                 href={item.href}
               >
                 {item.label}
               </Link>
             </NavbarItem>
           ))}
+          {session.status == "authenticated" ? (
+            <NavbarItem>
+              <Link color="danger" onClick={() => signOut()}>
+                Logout
+              </Link>
+            </NavbarItem>
+          ) : (
+            <NavbarItem>
+              <Link color="primary" href="/login">
+                Login
+              </Link>
+            </NavbarItem>
+          )}
         </ul>
       </NavbarContent>
 
@@ -76,13 +85,7 @@ export const Navbar = () => {
                 className={clsx({
                   ["pointer-events-none"]: pathname === item.href,
                 })}
-                color={
-                  pathname === item.href
-                    ? "primary"
-                    : index === siteConfig.navItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
+                color={pathname === item.href ? "primary" : "foreground"}
                 href={item.href}
                 size="lg"
               >
@@ -90,6 +93,19 @@ export const Navbar = () => {
               </Link>
             </NavbarMenuItem>
           ))}
+          {session.status == "authenticated" ? (
+            <NavbarItem>
+              <Link color="danger" size="lg" onClick={() => signOut()}>
+                Logout
+              </Link>
+            </NavbarItem>
+          ) : (
+            <NavbarItem>
+              <Link color="primary" href="/login" size="lg">
+                Login
+              </Link>
+            </NavbarItem>
+          )}
         </div>
       </NavbarMenu>
     </NextUINavbar>

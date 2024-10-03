@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 
-import AccountUserModel from "@/mongodb/AccountUser";
+import AccountUserModel from "@/mongodb/models/AccountUser";
 import { connectDB } from "@/mongodb";
 
 export const userService = {
