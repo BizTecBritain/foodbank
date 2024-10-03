@@ -31,25 +31,27 @@ export const Navbar = () => {
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
-          {siteConfig.navItems.map((item) => (
-            <NavbarItem key={item.href}>
-              <Link
-                className={clsx({
-                  ["pointer-events-none"]: pathname === item.href,
-                })}
-                color={pathname === item.href ? "primary" : "foreground"}
-                href={item.href}
-              >
-                {item.label}
-              </Link>
-            </NavbarItem>
-          ))}
           {session.status == "authenticated" ? (
-            <NavbarItem>
-              <Link color="danger" onClick={() => signOut()}>
-                Logout
-              </Link>
-            </NavbarItem>
+            <>
+              {siteConfig.navItems.map((item) => (
+                <NavbarItem key={item.href}>
+                  <Link
+                    className={clsx({
+                      ["pointer-events-none"]: pathname === item.href,
+                    })}
+                    color={pathname === item.href ? "primary" : "foreground"}
+                    href={item.href}
+                  >
+                    {item.label}
+                  </Link>
+                </NavbarItem>
+              ))}
+              <NavbarItem>
+                <Link color="danger" onClick={async () => await signOut()}>
+                  Logout
+                </Link>
+              </NavbarItem>
+            </>
           ) : (
             <NavbarItem>
               <Link color="primary" href="/login">
@@ -76,29 +78,35 @@ export const Navbar = () => {
 
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
-          {siteConfig.navItems.map((item, index) => (
-            <NavbarMenuItem
-              key={`${item}-${index}`}
-              isActive={pathname === item.href}
-            >
-              <Link
-                className={clsx({
-                  ["pointer-events-none"]: pathname === item.href,
-                })}
-                color={pathname === item.href ? "primary" : "foreground"}
-                href={item.href}
-                size="lg"
-              >
-                {item.label}
-              </Link>
-            </NavbarMenuItem>
-          ))}
           {session.status == "authenticated" ? (
-            <NavbarItem>
-              <Link color="danger" size="lg" onClick={() => signOut()}>
-                Logout
-              </Link>
-            </NavbarItem>
+            <>
+              {siteConfig.navItems.map((item, index) => (
+                <NavbarMenuItem
+                  key={`${item}-${index}`}
+                  isActive={pathname === item.href}
+                >
+                  <Link
+                    className={clsx({
+                      ["pointer-events-none"]: pathname === item.href,
+                    })}
+                    color={pathname === item.href ? "primary" : "foreground"}
+                    href={item.href}
+                    size="lg"
+                  >
+                    {item.label}
+                  </Link>
+                </NavbarMenuItem>
+              ))}
+              <NavbarItem>
+                <Link
+                  color="danger"
+                  size="lg"
+                  onClick={async () => await signOut()}
+                >
+                  Logout
+                </Link>
+              </NavbarItem>
+            </>
           ) : (
             <NavbarItem>
               <Link color="primary" href="/login" size="lg">

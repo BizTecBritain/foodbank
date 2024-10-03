@@ -1,10 +1,8 @@
-import { Snippet } from "@nextui-org/snippet";
-import { Code } from "@nextui-org/code";
+import { Button } from "@nextui-org/button";
 import Link from "next/link";
 
 import { title, subtitle } from "@/components/primitives";
 import { getServerAuthSession } from "@/auth";
-import UserInfo from "@/components/user-info";
 
 export default async function Home() {
   const authSession = await getServerAuthSession();
@@ -12,32 +10,43 @@ export default async function Home() {
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
       <div className="inline-block max-w-xl text-center justify-center">
-        <span className={title()}>Make&nbsp;</span>
-        <span className={title({ color: "violet" })}>beautiful&nbsp;</span>
+        <span className={title()}>Manage&nbsp;</span>
+        <span className={title({ color: "violet" })}>Foodbank&nbsp;</span>
         <br />
-        <span className={title()}>
-          websites regardless of your design experience.
-        </span>
+        <span className={title()}>resources in an easy to use UI</span>
         <div className={subtitle({ class: "mt-4" })}>
-          Beautiful, fast and modern React UI library.
+          Simple toolkit for efficient, paperless foodbank management.
         </div>
       </div>
 
-      <div className="mt-8">
-        <Snippet hideCopyButton hideSymbol variant="bordered">
-          <span>
-            Get started by editing <Code color="primary">app/page.tsx</Code>
+      {authSession?.user ? (
+        <div className="inline-block max-w-xl text-center justify-center">
+          <span className={title({ size: "sm" })}>Welcome&nbsp;</span>
+          <span className={title({ size: "sm", color: "cyan" })}>
+            {authSession.user.name}&nbsp;
           </span>
-        </Snippet>
-      </div>
-      {authSession?.user && <UserInfo user={authSession?.user} />}
-      {!authSession?.user && (
-        <Link
-          className="font-medium mt-2 text-blue-600 hover:underline"
+          <br />
+          <span className={subtitle({ class: "mt-4" })}>
+            Browse using the navbar
+          </span>
+          <Button
+            as={Link}
+            className="font-medium mt-2 px-8"
+            color="primary"
+            href="/logout"
+          >
+            Logout
+          </Button>
+        </div>
+      ) : (
+        <Button
+          as={Link}
+          className="font-medium mt-2 px-8"
+          color="primary"
           href="/login"
         >
           Login
-        </Link>
+        </Button>
       )}
     </section>
   );

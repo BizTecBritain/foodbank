@@ -80,7 +80,7 @@ export default function LoginPage({ searchParams }: PageProps) {
               />
             </div>
             <div className="space-y-2">
-              <Button className="w-full" disabled={pending} type="submit">
+              <Button className="w-full" isLoading={pending} type="submit">
                 Login
               </Button>
             </div>
