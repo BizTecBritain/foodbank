@@ -14,17 +14,19 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, account }) {
       if (account && account.type === "credentials") {
         token.userId = account.providerAccountId; // this is Id that coming from authorize() callback
+        await connectDB();
+        const user = await AccountUserModel.findById(account.providerAccountId);
+
+        token.name = user?.name || "";
+        token.admin = user?.admin || false;
       }
 
       return token;
     },
     async session({ session, token }) {
-      await connectDB();
-      const user = await AccountUserModel.findById(token.userId);
-
       session.user._id = token.userId;
-      session.user.name = user?.name || "";
-      session.user.admin = user?.admin || false;
+      session.user.name = token.name;
+      session.user.admin = token.admin;
 
       return session;
     },
