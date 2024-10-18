@@ -1,11 +1,11 @@
-import mongoose, { Model, model, Schema } from "mongoose";
+import mongoose, { Model, model, Schema, Types } from "mongoose";
 
 export interface FoodDocument {
-  _id: Schema.Types.ObjectId;
+  _id: Types.ObjectId;
   name: string;
-  image: Buffer;
-  type: "Food" | "Toiletries";
-  translatedNames: { [key: string]: string };
+  image: string;
+  foodType: "Food" | "Toiletries";
+  translatedNames: Types.Map<string>;
   isAvailable: boolean;
   availableNumber: number;
 }
@@ -16,10 +16,10 @@ const FoodSchema = new Schema<FoodDocument>({
     required: [true, "Name is required"],
   },
   image: {
-    type: Buffer,
-    default: false,
+    type: String,
+    required: true,
   },
-  type: {
+  foodType: {
     type: String,
     enum: ["Food", "Toiletries"],
     required: true,

@@ -1,11 +1,11 @@
-import mongoose, { Model, model, Schema } from "mongoose";
+import mongoose, { Model, model, Schema, Types } from "mongoose";
 
 export interface OrderDocument {
-  _id: Schema.Types.ObjectId;
+  _id: Types.ObjectId;
   number: number;
-  user: Schema.Types.ObjectId;
-  food: Schema.Types.ObjectId[];
-  toiletries: Schema.Types.ObjectId[];
+  user: Types.ObjectId;
+  food: Types.ObjectId[];
+  toiletries: Types.ObjectId[];
   extraNotes: string;
   isPriority: boolean;
   status: "Pending" | "Fulfilling Food" | "Fulfilling Toiletries" | "Complete";

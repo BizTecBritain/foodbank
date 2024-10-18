@@ -1,7 +1,7 @@
-import mongoose, { Model, model, Schema } from "mongoose";
+import mongoose, { Model, model, Schema, Types } from "mongoose";
 
 export interface AccountUserDocument {
-  _id: Schema.Types.ObjectId;
+  _id: Types.ObjectId;
   name: string;
   language: string;
   familySize: {
@@ -9,7 +9,7 @@ export interface AccountUserDocument {
     children: number;
   };
   address?: string;
-  orders: Schema.Types.ObjectId[];
+  orders: Types.ObjectId[];
 }
 
 const AccountUserSchema = new Schema<AccountUserDocument>({
