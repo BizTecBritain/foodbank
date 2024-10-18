@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -7,6 +6,7 @@ import { useDisclosure } from "@nextui-org/modal";
 
 import LangaugeSelectPage from "./language-select";
 import UserDetailsPage from "./user-details";
+import FoodOrderPage from "./food-order-page";
 
 import { logError } from "@/actions/logError";
 import AskYesNo, { CustomComponentProps } from "@/components/ask-yes-no";
@@ -43,11 +43,11 @@ function parseSearchParams(encryptedDetails: string | null) {
 
 function detailsToPage(details: Details) {
   if (details.langauge) {
-    if (details.name) {
-      if (details.adults && details.children) {
-        return 0;
-      }
-
+    if (
+      details.name &&
+      details.adults != undefined &&
+      details.children != undefined
+    ) {
       return 2;
     }
 
@@ -98,8 +98,13 @@ export default function PlaceOrderPage() {
   }
 
   const pages = [
-    <LangaugeSelectPage nextPage={nextPage} />,
-    <UserDetailsPage nextPage={nextPage} />,
+    <LangaugeSelectPage key="language" nextPage={nextPage} />,
+    <UserDetailsPage key="user" nextPage={nextPage} />,
+    <FoodOrderPage
+      key="food"
+      language={details.langauge || "English"}
+      nextPage={nextPage}
+    />,
   ];
 
   return (
