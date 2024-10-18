@@ -5,6 +5,7 @@ import { userService } from "./userService";
 
 import AccountUserModel from "@/mongodb/models/AccountUser";
 import { connectDB } from "@/mongodb";
+import { logger } from "@/services/logger";
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -19,6 +20,7 @@ export const authOptions: NextAuthOptions = {
 
         token.name = user?.name || "";
         token.admin = user?.admin || false;
+        logger.info(`User: ${token.name} just generated a new JWT`, { user });
       }
 
       return token;
@@ -27,6 +29,14 @@ export const authOptions: NextAuthOptions = {
       session.user._id = token.userId;
       session.user.name = token.name;
       session.user.admin = token.admin;
+
+      logger.info(`User: ${token.name} just generated a new session`, {
+        user: session.user,
+        session: {
+          expires: session.expires,
+          token: token,
+        },
+      });
 
       return session;
     },

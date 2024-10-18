@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js + NextUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "Foodbank",
+  description: "Simple toolkit for efficient, paperless foodbank management",
   navItems: [
     {
       label: "Top-up Table",
